@@ -1,0 +1,46 @@
+# Background
+Window.SetBackgroundTopColor   (0, 0, 0);
+Window.SetBackgroundBottomColor(0, 0, 0);
+
+# state
+images   = [];    # 0..100
+sprite   = NULL;
+progress = 0;     # index frame
+
+fun pad3(n) {
+  if (n < 10)  return "00" + n;
+  if (n < 100) return "0"  + n;
+  return "" + n;
+}
+
+# center helper
+fun center(img) {
+  sprite.SetX(Window.GetWidth()  / 2 - img.GetWidth()  / 2);
+  sprite.SetY(Window.GetHeight() / 2 - img.GetHeight() / 2);
+}
+
+for (i = 0; i <= 100; i = i + 1)
+  images[i] = Image("frames/boot/frame-" + pad3(i) + ".png");
+
+sprite = Sprite();
+sprite.SetImage(images[0]);
+center(images[0]);
+
+fun refresh_callback () {
+  if (progress < 100) {
+    progress = progress + 1;
+    sprite.SetImage(images[progress]);
+    center(images[progress]);
+  } else {
+    sprite.SetImage(images[100]);
+    center(images[100]);
+  }
+}
+
+Plymouth.SetRefreshFunction(refresh_callback);
+
+fun message (text) { }
+fun quit () {
+  sprite.SetImage(images[100]);
+  center(images[100]);
+}

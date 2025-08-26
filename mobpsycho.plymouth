@@ -1,0 +1,13 @@
+[Plymouth Theme]
+Name=Mob-Psycho
+Description=Mob Psycho 100
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/mobpsycho
+ScriptFile=/usr/share/plymouth/themes/mobpsycho/mobpsycho.script
+
+
+# sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/mobpsycho/mobpsycho.plymouth 100
+# sudo update-alternatives --config default.plymouth
+# sudo update-initramfs -u

@@ -1,3 +1,11 @@
+## Conf
+`/etc/default/grub`
+```
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+sudo update-grub
+```
+
+
 ## Ubuntu
 ```
 sudo git clone https://github.com/Mantodkaz/mobpsycho-plymouth-themes \

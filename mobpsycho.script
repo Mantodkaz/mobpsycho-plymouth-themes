@@ -1,46 +1,27 @@
-# Background
-Window.SetBackgroundTopColor   (0, 0, 0);
-Window.SetBackgroundBottomColor(0, 0, 0);
+FRAME_COUNT = 101;                     # 0..100
+flyingman_image = [];
+for (i = 0; i < FRAME_COUNT; i = i + 1)
+  flyingman_image[i] = Image("frames/boot/frame-" + i + ".png");
 
-# state
-images   = [];    # 0..100
-sprite   = NULL;
-progress = 0;     # index frame
+flyingman_sprite = Sprite();
 
-fun pad3(n) {
-  if (n < 10)  return "00" + n;
-  if (n < 100) return "0"  + n;
-  return "" + n;
-}
+# center once
+flyingman_sprite.SetX(Window.GetX() + (Window.GetWidth() / 2 - flyingman_image[0].GetWidth()  / 2));
+flyingman_sprite.SetY(Window.GetY() + (Window.GetHeight() / 2 - flyingman_image[0].GetHeight() / 2));
 
-# center helper
-fun center(img) {
-  sprite.SetX(Window.GetWidth()  / 2 - img.GetWidth()  / 2);
-  sprite.SetY(Window.GetHeight() / 2 - img.GetHeight() / 2);
-}
+# start at 0%
+progress = 0;
+STEP = 2;     # per 2%
 
-for (i = 0; i <= 100; i = i + 1)
-  images[i] = Image("frames/boot/frame-" + pad3(i) + ".png");
+flyingman_sprite.SetImage(flyingman_image[0]);
 
-sprite = Sprite();
-sprite.SetImage(images[0]);
-center(images[0]);
-
-fun refresh_callback () {
+fun refresh_callback ()
+{
   if (progress < 100) {
-    progress = progress + 1;
-    sprite.SetImage(images[progress]);
-    center(images[progress]);
-  } else {
-    sprite.SetImage(images[100]);
-    center(images[100]);
+    progress = Math.Min(100, progress + STEP);
+    flyingman_sprite.SetImage(flyingman_image[progress]);
   }
+  # 100% do nothing
 }
 
 Plymouth.SetRefreshFunction(refresh_callback);
-
-fun message (text) { }
-fun quit () {
-  sprite.SetImage(images[100]);
-  center(images[100]);
-}
